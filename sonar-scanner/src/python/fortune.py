@@ -51,10 +51,7 @@ def get(filename):
     datfile = open(filename+'.dat', 'r')
     data = datfile.read(5 * LONG_SIZE)
     if is_64_bit:
-        noexist=None
-        noexis2=None
-        noexis3=None
-        noexis4=None
+
         v1, v2, n1, n2, l1, l2, s1, s2, f1, f2,f3,f4,f4 = struct.unpack('!10L', data)
         version  = v1 + (v2 << 32)
         numstr   = n1 + (n2 << 32)
