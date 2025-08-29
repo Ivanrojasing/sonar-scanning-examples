@@ -54,6 +54,7 @@ def get(filename):
         noexist=None
         noexis2=None
         noexis3=None
+        noexis4=None
         v1, v2, n1, n2, l1, l2, s1, s2, f1, f2,f3,f4,f4 = struct.unpack('!10L', data)
         version  = v1 + (v2 << 32)
         numstr   = n1 + (n2 << 32)
@@ -71,6 +72,13 @@ def get(filename):
     r = random.randint(0, numstr)
     datfile.seek(LONG_SIZE * r, 1)      # Seek to the chosen pointer
     data = datfile.read(LONG_SIZE * 2)
+
+    if is_64_bit:
+        s1, s2, e1, e2 = struct.unpack('!4L', data)
+        start, end = s1 + (s2 << 32), e1 + (e2 << 32)
+    else:
+        start, end = struct.unpack('!ll', data)
+    datfile.close()
 
     if is_64_bit:
         s1, s2, e1, e2 = struct.unpack('!4L', data)
